@@ -29,3 +29,14 @@ def inicializar_agenda():
 def mostrar_agenda():
     importar_datos_desde_csv()
     return agenda
+
+def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):       
+    agenda.append({
+        'id_medico': id_medico,
+        'dia_numero': dia_numero,
+        'hora_inicio': hora_inicio,
+        'hora_fin': hora_fin,
+        'fecha_actualizacion': fecha_actualizacion
+    })
+    exportar_datos_a_csv()
+    return agenda[-1]
