@@ -7,8 +7,10 @@ def importar_datos_desde_csv():
     global agenda
     agenda = []
     with open(ruta_agenda, newline='', encoding='utf8') as csvfile:
-        reader = csv.reader(csvfile)
+        reader = csv.DictReader(csvfile)
         for row in reader:
+            row['id_medico'] = int(row['id_medico'])
+            row['dia_numero'] = int(row['dia_numero'])
             agenda.append(row)
 
 def exportar_datos_a_csv():
