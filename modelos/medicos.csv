@@ -4,4 +4,3 @@ id,dni,nombre,apellido,matricula,telefono,email,habilitado
 3,93938752,Julián,Diez,621255,992-157-428,julian.diez@example.com,2020-09-10T16:54:56.283Z
 4,34554217,Esther,Román,031177,902-804-397,esther.roman@example.com,2012-10-16T13:20:17.534Z
 5,47888007,Anna,Domínguez,197898,948-541-104,anna.dominguez@example.com,2020-12-05T14:01:59.148Z
-6,798563,Pepito,Flores,164328,987-666-798,email@example.com,2018-04-16T15:04:35.223Z
