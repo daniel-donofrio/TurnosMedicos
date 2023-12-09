@@ -13,7 +13,7 @@ def importar_datos_desde_csv():
 
 def exportar_datos_a_csv():
     with open(ruta_agenda, mode='w', newline='', encoding='utf8') as csvfile:
-        campos_nombres = ['id_medico','fecha','hora','estado']
+        campos_nombres = ['id_medico','dia_numero','hora_inicio','hora_fin','fecha_actualizacion']
         writer = csv.DictWriter(csvfile, fieldnames=campos_nombres)
         writer.writeheader()
         for medico in agenda:
