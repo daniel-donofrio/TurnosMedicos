@@ -28,7 +28,8 @@ def inicializar_agenda():
 
 def mostrar_agenda():
     importar_datos_desde_csv()
-    return agenda
+    agenda_ordenada = sorted(agenda, key=lambda x: (x['id_medico'], x['dia_numero']))
+    return agenda_ordenada
 
 def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):       
     agenda.append({

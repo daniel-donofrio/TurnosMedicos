@@ -9,3 +9,4 @@ id_medico,dia_numero,hora_inicio,hora_fin,fecha_actualizacion
 4,3,12:00,16:00,2023/9/6
 5,1,8:00,13:00,2023/8/10
 5,4,10:00,15:00,2023/8/10
+1,2,8:00,12:00,2023/12/9
