@@ -41,3 +41,20 @@ def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_ac
     })
     exportar_datos_a_csv()
     return agenda[-1]
+
+def mostrar_agenda_por_id(id_medico):
+    for medico in agenda:
+        if medico['id_medico'] == id_medico:
+            return medico
+    return None
+
+def actualizar_horario_por_id(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):
+    mostrar_agenda_por_id(id_medico)
+    for medico in agenda:
+        if medico['dia_numero'] == dia_numero:
+            medico['hora_inicio'] = hora_inicio
+            medico['hora_fin'] = hora_fin
+            medico['fecha_actualizacion'] = fecha_actualizacion
+            exportar_datos_a_csv()
+            return medico
+    return None
