@@ -9,7 +9,7 @@ def mostrarAgenda():
     if len(agenda) > 0:
         return jsonify(agenda), 200
     else:
-        return jsonify({'message': 'No registros en la agenda'}), 404
+        return jsonify({'error': 'No registros en la agenda'}), 404
 
 @agenda_bp.route('/agenda', methods=['POST'])
 def agregarDiaYHorario():
@@ -19,9 +19,9 @@ def agregarDiaYHorario():
             nuevo_registro = agregar_dia_y_horario(nuevo['id_medico'], nuevo['dia_numero'], nuevo['hora_inicio'], nuevo['hora_fin'], nuevo['fecha_actualizacion'])
             return jsonify(nuevo_registro), 201
         else:
-            return jsonify({'message': 'Datos incompletos'}), 400
+            return jsonify({'error': 'Datos incompletos'}), 400
     else:
-        return jsonify({'message': 'No se enviaron datos en formato JSON'}), 400
+        return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
 
 @agenda_bp.route('/agenda/<int:id>', methods=['PUT'])
 def actualizarHorarioPorId(id):
@@ -31,6 +31,6 @@ def actualizarHorarioPorId(id):
             actualizar_horario_por_id(horario['id_medico'], horario['dia_numero'], horario['hora_inicio'], horario['hora_fin'], horario['fecha_actualizacion'])
             return jsonify({'message': 'Horario actualizado correctamente'}), 200
         else:
-            return jsonify({'message': 'Datos incompletos'}), 400
+            return jsonify({'error': 'Datos incompletos'}), 400
     else:
-        return jsonify({'message': 'No se enviaron datos en formato JSON'}), 400
+        return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
