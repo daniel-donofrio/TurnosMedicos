@@ -44,7 +44,7 @@ def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_ac
         'fecha_actualizacion': fecha_actualizacion
     }
 
-    # Verificar si la cita ya existe en la agenda
+
     for dia_horario in agenda:
         fecha = datetime.strptime(dia_horario['fecha_actualizacion'], '%Y/%m/%d')
         fecha_nueva = datetime.strptime(nuevo_dia_horario['fecha_actualizacion'], '%Y/%m/%d')
@@ -52,7 +52,7 @@ def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_ac
         if (dia_horario['dia_numero'] == nuevo_dia_horario['dia_numero'] and
                 dia_horario['hora_inicio'] == nuevo_dia_horario['hora_inicio'] and
                 dia_horario['hora_fin'] == nuevo_dia_horario['hora_fin']):
-            return {'error': 'El dia y horario ya existe'}  # Modificación aquí
+            return {'error': 'El dia y horario ya existe'}
 
     agenda.append(nuevo_dia_horario)
     exportar_datos_a_csv()
