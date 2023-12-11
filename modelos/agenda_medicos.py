@@ -58,3 +58,12 @@ def actualizar_horario_por_id(id_medico, dia_numero, hora_inicio, hora_fin, fech
             exportar_datos_a_csv()
             return medico
     return None
+
+def eliminar_dia_por_id(id_medico, dia_numero):
+    for medico in agenda:
+        if medico['id_medico'] == id_medico:
+            if medico['dia_numero'] == dia_numero:
+                agenda.remove(medico)
+                exportar_datos_a_csv()
+                return True
+    return False

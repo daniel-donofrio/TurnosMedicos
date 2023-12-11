@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from modelos.agenda_medicos import mostrar_agenda, agregar_dia_y_horario, actualizar_horario_por_id
+from modelos.agenda_medicos import mostrar_agenda, agregar_dia_y_horario, actualizar_horario_por_id, eliminar_dia_por_id
 
 agenda_bp = Blueprint('agenda_bp', __name__)
 
@@ -34,3 +34,11 @@ def actualizarHorarioPorId(id):
             return jsonify({'error': 'Datos incompletos'}), 400
     else:
         return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
+    
+@agenda_bp.route('/agenda/<int:id>/<int:dia>', methods=['DELETE'])
+def eliminar_paciente(id, dia):
+    dia = eliminar_dia_por_id(id, dia)
+    if dia:
+        return jsonify({'mensaje': 'El dia de atencion ha sido eliminado'}), 200
+    else:
+        return jsonify({'error': 'El dia de atencion no pudo ser eliminado'}), 404
