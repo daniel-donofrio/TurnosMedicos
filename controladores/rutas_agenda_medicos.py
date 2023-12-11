@@ -16,8 +16,13 @@ def agregarDiaYHorario():
     if request.is_json:
         nuevo = request.get_json()
         if 'id_medico' in nuevo and 'dia_numero' in nuevo and 'hora_inicio' in nuevo and 'hora_fin' in nuevo and 'fecha_actualizacion' in nuevo:
-            nuevo_registro = agregar_dia_y_horario(nuevo['id_medico'], nuevo['dia_numero'], nuevo['hora_inicio'], nuevo['hora_fin'], nuevo['fecha_actualizacion'])
-            return jsonify(nuevo_registro), 201
+            resultado = agregar_dia_y_horario(nuevo['id_medico'], nuevo['dia_numero'], nuevo['hora_inicio'], nuevo['hora_fin'], nuevo['fecha_actualizacion'])
+            
+            # Verificar si el resultado contiene el mensaje de error
+            if 'error' in resultado:
+                return jsonify(resultado), 400
+            else:
+                return jsonify(resultado), 201
         else:
             return jsonify({'error': 'Datos incompletos'}), 400
     else:
@@ -29,7 +34,10 @@ def actualizarHorarioPorId(id):
         horario = request.get_json()
         if 'id_medico' in horario and 'dia_numero' in horario and 'hora_inicio' in horario and 'hora_fin' in horario and 'fecha_actualizacion' in horario:
             nuevo_horario = actualizar_horario_por_id(horario['id_medico'], horario['dia_numero'], horario['hora_inicio'], horario['hora_fin'], horario['fecha_actualizacion'])
-            return jsonify(nuevo_horario), 200
+            if actualizar_horario_por_id():
+                return jsonify(nuevo_horario), 200
+            else:
+                return jsonify({'error': 'El dia y horario ya existe'}), 400
         else:
             return jsonify({'error': 'Datos incompletos'}), 400
     else:

@@ -1,4 +1,5 @@
 import requests, csv, os
+from datetime import datetime
 
 agenda = []
 ruta_agenda = 'modelos\\agenda_medicos.csv'
@@ -31,14 +32,29 @@ def mostrar_agenda():
     agenda_ordenada = sorted(agenda, key=lambda x: (x['id_medico'], x['dia_numero']))
     return agenda_ordenada
 
-def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):       
-    agenda.append({
+from datetime import datetime
+
+def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):
+    fecha_actualizacion = datetime.now().strftime('%Y/%m/%d')
+    nuevo_dia_horario = {
         'id_medico': id_medico,
         'dia_numero': dia_numero,
         'hora_inicio': hora_inicio,
         'hora_fin': hora_fin,
         'fecha_actualizacion': fecha_actualizacion
-    })
+    }
+
+    # Verificar si la cita ya existe en la agenda
+    for dia_horario in agenda:
+        fecha = datetime.strptime(dia_horario['fecha_actualizacion'], '%Y/%m/%d')
+        fecha_nueva = datetime.strptime(nuevo_dia_horario['fecha_actualizacion'], '%Y/%m/%d')
+
+        if (dia_horario['dia_numero'] == nuevo_dia_horario['dia_numero'] and
+                dia_horario['hora_inicio'] == nuevo_dia_horario['hora_inicio'] and
+                dia_horario['hora_fin'] == nuevo_dia_horario['hora_fin']):
+            return {'error': 'El dia y horario ya existe'}  # Modificación aquí
+
+    agenda.append(nuevo_dia_horario)
     exportar_datos_a_csv()
     return agenda[-1]
 
