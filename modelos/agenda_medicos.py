@@ -51,7 +51,9 @@ def mostrar_agenda_por_id(id_medico):
 def actualizar_horario_por_id(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):
     mostrar_agenda_por_id(id_medico)
     for medico in agenda:
-        if medico['dia_numero'] == dia_numero:
+        if  medico['dia_numero'] == dia_numero:
+            medico['id_medico'] = id_medico
+            medico['dia_numero'] = dia_numero
             medico['hora_inicio'] = hora_inicio
             medico['hora_fin'] = hora_fin
             medico['fecha_actualizacion'] = fecha_actualizacion
