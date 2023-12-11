@@ -28,8 +28,8 @@ def actualizarHorarioPorId(id):
     if request.is_json:
         horario = request.get_json()
         if 'id_medico' in horario and 'dia_numero' in horario and 'hora_inicio' in horario and 'hora_fin' in horario and 'fecha_actualizacion' in horario:
-            actualizar_horario_por_id(horario['id_medico'], horario['dia_numero'], horario['hora_inicio'], horario['hora_fin'], horario['fecha_actualizacion'])
-            return jsonify({'message': 'Horario actualizado correctamente'}), 200
+            nuevo_horario = actualizar_horario_por_id(horario['id_medico'], horario['dia_numero'], horario['hora_inicio'], horario['hora_fin'], horario['fecha_actualizacion'])
+            return jsonify(nuevo_horario), 200
         else:
             return jsonify({'error': 'Datos incompletos'}), 400
     else:
