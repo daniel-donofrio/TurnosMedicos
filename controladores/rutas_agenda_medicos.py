@@ -32,9 +32,9 @@ def agregarDiaYHorario():
 def actualizarHorarioPorId(id):
     if request.is_json:
         horario = request.get_json()
-        if 'id_medico' in horario and 'dia_numero' in horario and 'hora_inicio' in horario and 'hora_fin' in horario and 'fecha_actualizacion' in horario:
-            nuevo_horario = actualizar_horario_por_id(horario['id_medico'], horario['dia_numero'], horario['hora_inicio'], horario['hora_fin'], horario['fecha_actualizacion'])
-            if actualizar_horario_por_id():
+        if 'id_medico' in horario and 'dia_numero' in horario and 'hora_inicio' in horario and 'hora_fin' in horario:
+            nuevo_horario = actualizar_horario_por_id(horario['id_medico'], horario['dia_numero'], horario['hora_inicio'], horario['hora_fin'])
+            if nuevo_horario:
                 return jsonify(nuevo_horario), 200
             else:
                 return jsonify({'error': 'El dia y horario ya existe'}), 400
@@ -44,7 +44,7 @@ def actualizarHorarioPorId(id):
         return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
     
 @agenda_bp.route('/agenda/<int:id>/<int:dia>', methods=['DELETE'])
-def eliminar_paciente(id, dia):
+def eliminar_dia_id(id, dia):
     dia = eliminar_dia_por_id(id, dia)
     if dia:
         return jsonify({'mensaje': 'El dia de atencion ha sido eliminado'}), 200

@@ -32,8 +32,9 @@ def mostrar_agenda():
     agenda_ordenada = sorted(agenda, key=lambda x: (x['id_medico'], x['dia_numero']))
     return agenda_ordenada
 
+
 def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):
-    fecha_actualizacion = datetime.now().strftime('%Y/%m/%d')
+    fecha_actualizacion = datetime.now().strftime('%d-%m-%Y')
     nuevo_dia_horario = {
         'id_medico': id_medico,
         'dia_numero': dia_numero,
@@ -43,17 +44,18 @@ def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_ac
     }
 
     for dia_horario in agenda:
-        fecha = datetime.strptime(dia_horario['fecha_actualizacion'], '%Y/%m/%d')
-        fecha_nueva = datetime.strptime(nuevo_dia_horario['fecha_actualizacion'], '%Y/%m/%d')
-
-        if (dia_horario['dia_numero'] == nuevo_dia_horario['dia_numero'] and
-                dia_horario['hora_inicio'] == nuevo_dia_horario['hora_inicio'] and
-                dia_horario['hora_fin'] == nuevo_dia_horario['hora_fin']):
-            return {'error': 'El dia y horario ya existe'}
+        if dia_horario['id_medico'] == nuevo_dia_horario['id_medico'] and dia_horario['dia_numero'] == nuevo_dia_horario['dia_numero']:
+            horario_inicio = datetime.strptime(dia_horario['hora_inicio'], '%H:%M').time()
+            horario_fin = datetime.strptime(dia_horario['hora_fin'], '%H:%M').time()
+            nueva_hora_inicio = datetime.strptime(str(hora_inicio), '%H:%M').time()
+            nueva_hora_fin = datetime.strptime(str(hora_fin), '%H:%M').time()
+            if (nueva_hora_inicio >= horario_inicio and nueva_hora_inicio <=  horario_fin) or (nueva_hora_fin >= horario_inicio and nueva_hora_fin <=  horario_fin):
+                return {'error': 'El horario ingresado se encuentra dentro de un rango horario existente'}
 
     agenda.append(nuevo_dia_horario)
     exportar_datos_a_csv()
     return agenda[-1]
+ 
 
 def mostrar_agenda_por_id(id_medico):
     for medico in agenda:
@@ -61,9 +63,9 @@ def mostrar_agenda_por_id(id_medico):
             return medico
     return None
 
-def actualizar_horario_por_id(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):
+def actualizar_horario_por_id(id_medico, dia_numero, hora_inicio, hora_fin):
     mostrar_agenda_por_id(id_medico)
-    fecha_hoy = datetime.now().strftime('%Y/%m/%d')
+    fecha_hoy = datetime.now().strftime('%d-%m-%Y')
     for medico in agenda:
         if  medico['dia_numero'] == dia_numero:
             medico['id_medico'] = id_medico
