@@ -33,7 +33,7 @@ def mostrar_agenda():
     return agenda_ordenada
 
 
-def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin, fecha_actualizacion):
+def agregar_dia_y_horario(id_medico, dia_numero, hora_inicio, hora_fin):
     fecha_actualizacion = datetime.now().strftime('%d-%m-%Y')
     nuevo_dia_horario = {
         'id_medico': id_medico,

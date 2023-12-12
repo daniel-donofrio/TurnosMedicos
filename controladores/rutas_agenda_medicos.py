@@ -15,8 +15,8 @@ def mostrarAgenda():
 def agregarDiaYHorario():
     if request.is_json:
         nuevo = request.get_json()
-        if 'id_medico' in nuevo and 'dia_numero' in nuevo and 'hora_inicio' in nuevo and 'hora_fin' in nuevo and 'fecha_actualizacion' in nuevo:
-            resultado = agregar_dia_y_horario(nuevo['id_medico'], nuevo['dia_numero'], nuevo['hora_inicio'], nuevo['hora_fin'], nuevo['fecha_actualizacion'])
+        if 'id_medico' in nuevo and 'dia_numero' in nuevo and 'hora_inicio' in nuevo and 'hora_fin' in nuevo:
+            resultado = agregar_dia_y_horario(nuevo['id_medico'], nuevo['dia_numero'], nuevo['hora_inicio'], nuevo['hora_fin'])
             
             # Verificar si el resultado contiene el mensaje de error
             if 'error' in resultado:
