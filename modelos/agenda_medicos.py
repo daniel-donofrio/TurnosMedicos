@@ -83,5 +83,4 @@ def eliminar_dia_por_id(id_medico, dia_numero):
             if medico['dia_numero'] == dia_numero:
                 agenda.remove(medico)
                 exportar_datos_a_csv()
-                return True
-    return False
+    return True
