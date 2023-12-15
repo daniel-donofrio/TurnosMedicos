@@ -85,9 +85,12 @@ def registrar_turno(id_medico, id_paciente, hora_turno, fecha_solicitud):
             if paciente_existe(id_paciente):
                 if validar_turno_a_30_dias(fecha_solicitud):
                     if validar_horario(id_medico, hora_turno):
-                        turnos.append(turno)
-                        exportar_datos_a_csv()
-                        return {'mensaje': 'Turno registrado exitosamente'}
+                        if turno_existe(id_medico, hora_turno, fecha_solicitud):
+                            turnos.append(turno)
+                            exportar_datos_a_csv()
+                            return {'mensaje': 'Turno registrado exitosamente'}
+                        else:
+                            return {'error': 'El turno ya existe'}
                     else:
                         return {'error': 'El turno se encuentra fuera del rango horario disponible'}
                 else:
@@ -98,3 +101,17 @@ def registrar_turno(id_medico, id_paciente, hora_turno, fecha_solicitud):
             return {'error': 'El medico no atiende en el dia ingresado'}
     else:
         return {'error': 'El medico no se encuentra habilitado'}
+
+def turno_existe(id_medico, hora_turno, fecha_solicitud):
+    fecha_solicitud = datetime.strptime(fecha_solicitud, '%d/%m/%Y')
+    for turno in turnos:
+        if turno['id_medico'] == id_medico and turno['hora_turno'] == hora_turno and turno['fecha_solicitud'] == fecha_solicitud:
+            return True
+    return False
+
+def eliminar_turno(id_medico, hora_turno, fecha_solicitud):
+    for turno in turnos:
+        if turno['id_medico'] == int(id_medico) and turno['hora_turno'] == hora_turno and turno['fecha_solicitud'] == fecha_solicitud:
+            turnos.remove(turno)
+            exportar_datos_a_csv()
+            return True

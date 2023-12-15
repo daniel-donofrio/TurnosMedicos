@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from modelos.turnos import obtener_turnos_por_id, obtener_turnos_pendientes_por_id, registrar_turno
+from modelos.turnos import obtener_turnos_por_id, obtener_turnos_pendientes_por_id, registrar_turno, eliminar_turno
 # from modelos.agenda_medicos import mostrar_agenda
 
 
@@ -35,5 +35,18 @@ def agregar_turno_post():
                 return jsonify(resultado), 201
         else:
             return jsonify({'error': 'Faltan campos obligatorios'}), 400
+    else:
+        return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
+
+@turnos_bp.route('/turnos', methods=['DELETE'])
+def eliminar_turno_delete():
+    if request.is_json:
+        turno = request.get_json()
+        if 'id_medico' in turno and 'hora_turno' in turno and 'fecha_solicitud' in turno:
+            turno_a_eliminar = eliminar_turno(turno['id_medico'], turno['hora_turno'], turno['fecha_solicitud'])
+        if turno_a_eliminar:
+            return jsonify({'mensaje': 'El turno se ha eliminado correctamente'}), 200
+        else:
+            return jsonify({'error': 'El turno no existe'}), 404
     else:
         return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
