@@ -123,3 +123,9 @@ def eliminar_paciente_por_id(id):
         return pacientes
     else:
         return None
+
+def paciente_existe(id):
+    for paciente in pacientes:
+        if paciente['id'] == id:
+            return paciente
+    return None 

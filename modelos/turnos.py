@@ -1,6 +1,8 @@
-import requests, csv, os
+import csv, os
 from datetime import datetime
 from modelos.medicos import validar_medico_por_id
+from modelos.pacientes import paciente_existe
+from modelos.agenda_medicos import validar_dia_medico, validar_horario
 
 turnos = []
 
@@ -69,6 +71,7 @@ def validar_turno_a_30_dias(fecha_solicitud):
         return True
     else:
         return False
+
         
 def registrar_turno(id_medico, id_paciente, hora_turno, fecha_solicitud):
     turno = {
@@ -77,12 +80,21 @@ def registrar_turno(id_medico, id_paciente, hora_turno, fecha_solicitud):
         'hora_turno': hora_turno,
         'fecha_solicitud': fecha_solicitud
     }
-    if validar_medico_por_id(id_medico): 
-        if validar_turno_a_30_dias(fecha_solicitud):
-            turnos.append(turno)
-            exportar_datos_a_csv()
-            return {'mensaje': 'Turno registrado exitosamente'}
+    if validar_medico_por_id(id_medico):
+        if validar_dia_medico(id_medico, fecha_solicitud):
+            if paciente_existe(id_paciente):
+                if validar_turno_a_30_dias(fecha_solicitud):
+                    if validar_horario(id_medico, hora_turno):
+                        turnos.append(turno)
+                        exportar_datos_a_csv()
+                        return {'mensaje': 'Turno registrado exitosamente'}
+                    else:
+                        return {'error': 'El turno se encuentra fuera del rango horario disponible'}
+                else:
+                    return {'error': 'El turno se encuentra fuera del rango de los 30 dias'}
+            else:
+                return {'error': 'El paciente no se encuentra registrado'}
         else:
-            return {'error': 'El turno se encuentra fuera del rango de los 30 dias'}    
+            return {'error': 'El medico no atiende en el dia ingresado'}
     else:
-        return {'error': 'El medico no se encuentra habilitado'} 
+        return {'error': 'El medico no se encuentra habilitado'}

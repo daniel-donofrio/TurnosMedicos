@@ -1,5 +1,6 @@
 import requests, csv, os
 
+
 medicos = []
 id_medico = 1
 ruta_medicos ='modelos\\medicos.csv'

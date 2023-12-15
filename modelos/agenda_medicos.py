@@ -84,3 +84,25 @@ def eliminar_dia_por_id(id_medico, dia_numero):
                 agenda.remove(medico)
                 exportar_datos_a_csv()
     return True
+
+def validar_dia_medico(id_medico, fecha_solicitud):
+    fecha_numero = datetime.strptime(fecha_solicitud, '%d/%m/%Y')
+    fecha_numero = fecha_numero.strftime('%w')
+    for medico in agenda:
+        if medico['id_medico'] == id_medico:
+            if medico['dia_numero'] == int(fecha_numero):
+                return True
+    return False
+        
+def validar_horario(id_medico, hora_turno):
+    for medico in agenda:
+        if medico['id_medico'] == id_medico:
+            hora_a_comparar = hora_turno
+            hora_inicio = medico['hora_inicio']
+            hora_fin = medico['hora_fin']
+            hora_a_comparar = datetime.strptime(str(hora_a_comparar), '%H:%M').time()
+            hora_inicio = datetime.strptime(hora_inicio, '%H:%M').time()
+            hora_fin = datetime.strptime(hora_fin, '%H:%M').time()
+            if hora_inicio <= hora_a_comparar <= hora_fin:	
+                return True
+    return False
