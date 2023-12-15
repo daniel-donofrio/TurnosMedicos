@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from modelos.medicos import obtener_medicos, obtener_medico_por_id, agregar_medico, actualizar_medico_por_id, deshabilirar_medico_por_id, eliminar_medico_por_id
+from modelos.medicos import obtener_medicos, obtener_medico_por_id, agregar_medico, actualizar_medico_por_id, deshabilitar_habilitar_medico, eliminar_medico_por_id
 
 medicos_bp = Blueprint('medicos_bp', __name__)
 
@@ -47,14 +47,13 @@ def actualizar_medico(id):
         return jsonify({'error': 'No se recibió el formato JSON'}), 400
 
 # INCOMPLETO
-@medicos_bp.route('/medicos/<int:id>', methods=['PUT'])
+@medicos_bp.route('/medicos/deshabilitar/<int:id>', methods=['PUT'])
 def deshabilitar_medico(id):
-    if request.is_json:
-        medico = deshabilirar_medico_por_id(id)
-        if medico:
-            return jsonify({'mensaje': 'El medico ha sido deshabilitado'}), 200
-        else:
-            return jsonify({'error': 'Medico no encontrado'}), 404
+    medico = deshabilitar_habilitar_medico(id)
+    if medico == False:
+        return jsonify({'mensaje': 'El medico ha sido deshabilitado'}), 200
+    else:
+        return jsonify({'mensaje': 'El medico ha sido habilitado'}), 404
         
 # Agregamos la opcion de eliminar medico por si el profecional deja de trabajar en la clinica
 @medicos_bp.route('/medicos/<int:id>', methods=['DELETE'])

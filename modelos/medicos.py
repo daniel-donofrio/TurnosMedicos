@@ -20,7 +20,7 @@ def CargarMedicos():
             writer = csv.writer(file)
             
             # Escribir encabezados en el archivo CSV
-            writer.writerow(['id','dni','nombre', 'apellido','matricula','telefono', 'email', 'habilitado'])
+            writer.writerow(['id','dni','nombre', 'apellido','matricula','telefono', 'email'])
             
             # Iterar a través de los resultados y escribir en el archivo CSV
             for index, medico in enumerate( data['results'], start=1):
@@ -38,7 +38,7 @@ def CargarMedicos():
                 telefono = medico['phone']
                 email = medico['email']
                 habilitado = True
-                
+
                 writer.writerow([medico_id, dni, nombre, apellido, matricula, telefono, email, habilitado])
         print("Archivo CSV creado exitosamente.")
     else:
@@ -53,6 +53,7 @@ def importar_datos_desde_csv():
         for row in reader:
             row['id'] = int(row['id'])
             row['dni'] = int(row['dni'])
+            row['habilitado'] = bool(row['habilitado'])
             medicos.append(row)
     if len(medicos) > 0:
         id_medico = medicos[-1]['id'] + 1
@@ -68,8 +69,6 @@ def exportar_datos_a_csv():
             writer.writerow(medico)
 
 def inicializar_medicos():
-    global id_medico
-
     if os.path.exists(ruta_medicos):
        importar_datos_desde_csv()
     else:
@@ -92,7 +91,6 @@ def agregar_medico(dni, nombre, apellido, matricula, telefono, email, habilitado
     return medicos[-1]
 
 def obtener_medicos():
-    importar_datos_desde_csv()
     return medicos
 
 def obtener_medico_por_id(id):
@@ -115,16 +113,17 @@ def actualizar_medico_por_id(id, dni, nombre, apellido, matricula, telefono, ema
             return medico
     return None
 
-def deshabilirar_medico_por_id(id):#hay que ver que no queden turnos pendientes
-    global medicos
-    medicos = [medico for medico in medicos if medico['id']!= id]
-    if medicos['habilitado'] == True:
-        medicos['habilitado'] = False
-    exportar_datos_a_csv()
-    if len(medicos) > 0:
-        return medicos
-    else:
-        return None
+def deshabilitar_habilitar_medico(id):#hay que ver que no queden turnos pendientes
+    for medico in medicos:
+        if medico['id'] == id:
+            if medico['habilitado'] == True:
+                medico['habilitado'] = False
+                exportar_datos_a_csv()
+                return False
+            elif medico['habilitado'] == False:
+                medico['habilitado'] = True
+                exportar_datos_a_csv()
+                return True
 
 def eliminar_medico_por_id(id):
     global medicos
@@ -159,7 +158,7 @@ def eliminar_medico_por_id(id):
     
 def validar_medico_por_id(id): #agregada funciona
     medico = obtener_medico_por_id(id)
-    if medico and medico['habilitado'] == 'True':
+    if medico and medico['habilitado'] == True:
         return True
     else:
         return False

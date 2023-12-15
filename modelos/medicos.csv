@@ -1,6 +1,6 @@
 id,dni,nombre,apellido,matricula,telefono,email,habilitado
-1,6470173,Noelia,Ferrer,013191,995-575-903,noelia.ferrer@example.com,True
-2,929042,Juan,Ortega,975917,900-129-115,juan.ortega@example.com,2019-06-16T16:21:00.708Z
-3,93938752,Julián,Diez,621255,992-157-428,julian.diez@example.com,2020-09-10T16:54:56.283Z
-4,34554217,Esther,Román,031177,902-804-397,esther.roman@example.com,2012-10-16T13:20:17.534Z
-5,47888007,Anna,Domínguez,197898,948-541-104,anna.dominguez@example.com,2020-12-05T14:01:59.148Z
+1,6470173,Noelia,Ferrer,013191,995-575-903,noelia.ferrer@example.com,False
+2,929042,Carlos,Ortega,975917,900-129-115,juan.ortega@example.com,True
+3,93938752,Julián,Diez,621255,992-157-428,julian.diez@example.com,True
+4,34554217,Esther,Román,031177,902-804-397,esther.roman@example.com,True
+5,47888007,Anna,Domínguez,197898,948-541-104,anna.dominguez@example.com,True
