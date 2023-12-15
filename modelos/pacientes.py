@@ -123,4 +123,3 @@ def eliminar_paciente_por_id(id):
         return pacientes
     else:
         return None
-   

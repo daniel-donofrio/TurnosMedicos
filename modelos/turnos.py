@@ -1,5 +1,6 @@
 import requests, csv, os
 from datetime import datetime
+from modelos.medicos import validar_medico_por_id
 
 turnos = []
 
@@ -60,11 +61,11 @@ def obtener_turnos_pendientes_por_id(id_medico):
                 
     return turnos_pendientes
 
-def validar_turno_a_30_dias(fecha_solicitud): #agregada
+def validar_turno_a_30_dias(fecha_solicitud):
     fecha_hoy = datetime.now()
     fecha_solicitud = datetime.strptime(fecha_solicitud, '%d/%m/%Y')
-    diferencia = fecha_solicitud- fecha_hoy
-    if 0 < diferencia.days <= 30:
+    diferencia = fecha_solicitud.date() - fecha_hoy.date()
+    if 0 <= diferencia.days <= 30:
         return True
     else:
         return False
@@ -76,9 +77,12 @@ def registrar_turno(id_medico, id_paciente, hora_turno, fecha_solicitud):
         'hora_turno': hora_turno,
         'fecha_solicitud': fecha_solicitud
     }
-    if validar_turno_a_30_dias(fecha_solicitud):
-        turnos.append(turno)
-        exportar_datos_a_csv()
-        return True
+    if validar_medico_por_id(id_medico): 
+        if validar_turno_a_30_dias(fecha_solicitud):
+            turnos.append(turno)
+            exportar_datos_a_csv()
+            return {'mensaje': 'Turno registrado exitosamente'}
+        else:
+            return {'error': 'El turno se encuentra fuera del rango de los 30 dias'}    
     else:
-        return False
+        return {'error': 'El medico no se encuentra habilitado'} 

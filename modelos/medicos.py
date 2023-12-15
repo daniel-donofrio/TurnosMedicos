@@ -36,7 +36,7 @@ def CargarMedicos():
                 matricula = medico['login']['password']
                 telefono = medico['phone']
                 email = medico['email']
-                habilitado = medico['registered']['date']
+                habilitado = True
                 
                 writer.writerow([medico_id, dni, nombre, apellido, matricula, telefono, email, habilitado])
         print("Archivo CSV creado exitosamente.")
@@ -155,3 +155,10 @@ def eliminar_medico_por_id(id):
 # def modificar_medico(id, medico):
 #     for medico_en_lista in medicos:
 #         if
+    
+def validar_medico_por_id(id): #agregada funciona
+    medico = obtener_medico_por_id(id)
+    if medico and medico['habilitado'] == 'True':
+        return True
+    else:
+        return False

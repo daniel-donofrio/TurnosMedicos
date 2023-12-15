@@ -28,12 +28,12 @@ def agregar_turno_post():
     if request.is_json:
         nuevo = request.get_json()
         if 'id_medico' in nuevo and 'id_paciente' in nuevo and 'hora_turno' in nuevo and 'fecha_solicitud' in nuevo:
-            if registrar_turno(nuevo['id_medico'], nuevo['id_paciente'], nuevo['hora_turno'], nuevo['fecha_solicitud']):
-                return jsonify({'mensaje': 'Turno agregado correctamente'}), 201
+            resultado = registrar_turno(nuevo['id_medico'], nuevo['id_paciente'], nuevo['hora_turno'], nuevo['fecha_solicitud'])
+            if 'error' in resultado:   
+                return jsonify(resultado), 400
             else:
-                return jsonify({'error': 'No se pudo agregar el turno'}), 400
+                return jsonify(resultado), 201
         else:
-            return jsonify({'error': 'Faltan campos'}), 400
+            return jsonify({'error': 'Faltan campos obligatorios'}), 400
     else:
-        return jsonify({'error': 'El dato no es formato json'}), 400
-    
+        return jsonify({'error': 'No se enviaron datos en formato JSON'}), 400
