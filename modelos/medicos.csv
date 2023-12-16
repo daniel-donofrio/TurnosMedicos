@@ -1,6 +1,7 @@
 id,dni,nombre,apellido,matricula,telefono,email,habilitado
-1,6470173,Noelia,Ferrer,013191,995-575-903,noelia.ferrer@example.com,False
+1,6470173,Noelia,Ferrer,013191,995-575-903,noelia.ferrer@example.com,True
 2,929042,Carlos,Ortega,975917,900-129-115,juan.ortega@example.com,True
 3,93938752,Julián,Diez,621255,992-157-428,julian.diez@example.com,True
 4,34554217,Esther,Román,031177,902-804-397,esther.roman@example.com,True
 5,47888007,Anna,Domínguez,197898,948-541-104,anna.dominguez@example.com,True
+6,798563,Pepito,Pepon,164328,987-666-798,email@example.com,False

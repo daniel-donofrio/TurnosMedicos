@@ -1,4 +1,4 @@
-import requests, csv, os
+import csv, os
 from datetime import datetime
 
 agenda = []
