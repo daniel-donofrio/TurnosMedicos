@@ -1,3 +1,9 @@
+# PROYECTO FINAL DE PROGRAMACION II
+# Integrantes:
+# D'Onofrio, Daniel
+# Ponce, Gabriel
+#######
+
 from flask import Flask
 
 from modelos.medicos import inicializar_medicos
