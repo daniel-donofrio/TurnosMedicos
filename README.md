@@ -1,3 +1,3 @@
-<h1>Administrador de turnos medicos</h1>
+<h1>Desarrollo de una API REST para la gestión de turnos médicos</h1>
 
-Proyecto Back-end de un administrador de turnos médicos desarrollado en Python.
+Proyecto Backend de un administrador de turnos médicos desarrollado en Python.
